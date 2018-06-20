@@ -35,6 +35,7 @@ object ClockDemo {
     def running(cancellable: Cancellable): Receive = {
       case Stop =>
         cancellable.cancel()
+        ui.access(() => label.setText(""))
         context.become(waiting)
     }
 
@@ -54,14 +55,12 @@ class ClockDemo extends VerticalLayout {
   val label = new Label()
 
   add(
-    new Button("Start", _ => start()),
-    new Button("Stop", _ => stop()),
+    new Button("Start", _ => send(Start)),
+    new Button("Stop", _ => send(Stop)),
     label
   )
 
-  def start(): Unit = for (t <- timer) t ! Start
-
-  def stop(): Unit = for (t <- timer) t ! Stop
+  def send(msg: Any): Unit = for (t <- timer) t ! msg
 
   override def onAttach(attachEvent: AttachEvent): Unit = {
     super.onAttach(attachEvent)
@@ -69,8 +68,8 @@ class ClockDemo extends VerticalLayout {
   }
 
   override def onDetach(detachEvent: DetachEvent): Unit = {
-    stop()
-    for (t <- timer) t ! PoisonPill
+    send(Stop)
+    send(PoisonPill)
     timer = None
     super.onDetach(detachEvent)
   }

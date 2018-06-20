@@ -4,7 +4,7 @@ import InputDemo._
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
-import com.vaadin.flow.component.{ Component, ComponentEvent, ComponentEventListener, DomEvent, Tag }
+import com.vaadin.flow.component.{ Component, ComponentEvent, ComponentEventListener, DomEvent, Synchronize, Tag }
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.shared.Registration
 
@@ -14,8 +14,6 @@ object InputDemo {
   class TextField(value: String) extends Component {
 
     setValue(value)
-
-    import com.vaadin.flow.component.Synchronize
 
     @Synchronize(Array("change"))
     def getValue: String = getElement.getProperty("value")
@@ -30,7 +28,8 @@ object InputDemo {
   }
 
   @DomEvent("change")
-  class ChangeEvent(source: TextField, fromClient: Boolean) extends ComponentEvent[TextField](source, fromClient)
+  class ChangeEvent(source: TextField, fromClient: Boolean)
+    extends ComponentEvent[TextField](source, fromClient)
 
 }
 

@@ -10,7 +10,7 @@ object Dependencies {
   val slf4jOrg = "org.slf4j"
   val akkaOrg = "com.typesafe.akka"
 
-  val vaadin = vaadinOrg % "vaadin" % vaadinVersion
+  val vaadin = vaadinOrg % "vaadin-core" % vaadinVersion
   val slf4jSimple = slf4jOrg % "slf4j-simple" % slf4jVersion
   val akkaActor = akkaOrg %% "akka-actor" % akkaVersion
 

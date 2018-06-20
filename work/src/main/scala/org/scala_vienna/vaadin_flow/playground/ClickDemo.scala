@@ -8,7 +8,7 @@ import com.vaadin.flow.router.Route
 @Route("click")
 class ClickDemo extends VerticalLayout {
 
-  val label = new Label
+  val label = new Label()
   val button = new Button("Click me", _ => label.setText("Clicked!"))
 
   add(button, label)

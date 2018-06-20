@@ -7,13 +7,15 @@ version := BuildConfig.version
 scalaVersion := ScalaConfig.version
 scalacOptions ++= ScalaConfig.compilerOptions
 
+resolvers += "Vaadin prereleases" at "https://maven.vaadin.com/vaadin-prereleases"
+
 lazy val root = (project in file("."))
   .settings(inThisBuild(Seq(
     libraryDependencies := Dependencies.codeDeps
   )))
-  .aggregate(test)
+  .aggregate(work)
 
-lazy val test = (project in file("test"))
+lazy val work = (project in file("work"))
   .enablePlugins(JettyPlugin)
   .settings(
     containerLibs in Jetty := Seq(Dependencies.jettyLib)

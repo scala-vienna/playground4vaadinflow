@@ -2,7 +2,7 @@ import sbt._
 
 object Dependencies {
 
-  val vaadinVersion = "10.0.0.rc5" // vaadinVersion auch in reference.conf nachziehen
+  val vaadinVersion = "10.0.1"
   val slf4jVersion = "1.7.25"
   val akkaVersion = "2.5.13"
 

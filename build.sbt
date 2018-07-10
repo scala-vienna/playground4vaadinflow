@@ -7,8 +7,7 @@ version := BuildConfig.version
 scalaVersion := ScalaConfig.version
 scalacOptions ++= ScalaConfig.compilerOptions
 
-resolvers += "Vaadin prereleases" at "https://maven.vaadin.com/vaadin-prereleases"
-resolvers += "Vaadin Directory" at "http://maven.vaadin.com/vaadin-addons"
+resolvers += "vaadin-addons" at "http://maven.vaadin.com/vaadin-addons"
 
 lazy val root = (project in file("."))
   .settings(inThisBuild(Seq(

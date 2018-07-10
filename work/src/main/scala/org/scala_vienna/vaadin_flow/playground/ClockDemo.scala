@@ -12,7 +12,6 @@ import com.vaadin.flow.router.Route
 
 import akka.actor.{ Actor, ActorRef, ActorSystem, Cancellable, PoisonPill, Props }
 
-import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 object ClockDemo {
@@ -21,21 +20,24 @@ object ClockDemo {
 
   case object Stop
 
+  case object Tick
+
   class Timer(ui: UI, label: Label) extends Actor {
+
+    def showSynced(txt: String): Unit = ui.access(() => label.setText(txt))
 
     val waiting: Receive = {
       case Start =>
-        implicit val executionContext: ExecutionContext = system.dispatcher
-        val cancellable = system.scheduler.schedule(0.seconds, 10.millis) {
-          ui.access(() => label.setText(LocalTime.now().toString))
-        }
+        val cancellable = system.scheduler.schedule(0.seconds, 10.millis, self, Tick)(system.dispatcher)
         context.become(running(cancellable))
     }
 
     def running(cancellable: Cancellable): Receive = {
+      case Tick =>
+        showSynced(LocalTime.now().toString)
       case Stop =>
         cancellable.cancel()
-        ui.access(() => label.setText(""))
+        showSynced("")
         context.become(waiting)
     }
 
@@ -48,7 +50,7 @@ object ClockDemo {
 }
 
 @Push
-@Route("clock")
+@Route("clock/actor")
 class ClockDemo extends VerticalLayout {
 
   var timer: Option[ActorRef] = None

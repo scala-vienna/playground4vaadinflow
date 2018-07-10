@@ -4,6 +4,6 @@ object BuildConfig {
 
   val organisation = "org.scala_vienna.vaadin_flow.playground"
 
-  val version = "0.0.0"
+  val version = "1.0.0"
 
 }

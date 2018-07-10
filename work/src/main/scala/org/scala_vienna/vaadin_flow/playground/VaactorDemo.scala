@@ -25,7 +25,7 @@ object VaactorDemo {
 
   case object Clear
 
-  val system = ActorSystem("clock-demo")
+  val system = ActorSystem("vaactor-demo")
 
 }
 
@@ -38,9 +38,10 @@ class VaactorDemo extends VerticalLayout with Vaactor.HasActor {
   val label = new Label()
 
   add(
-    new Button("Start", _ =>
+    new Button("Start", _ => {
+      for (c <- cancellable) c.cancel()
       cancellable = Some(system.scheduler.schedule(0.seconds, 10.millis, self, Tick)(system.dispatcher))
-    ),
+    }),
     new Button("Stop", { _ =>
       for (c <- cancellable) c.cancel()
       cancellable = None

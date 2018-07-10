@@ -7,6 +7,8 @@ version := BuildConfig.version
 scalaVersion := ScalaConfig.version
 scalacOptions ++= ScalaConfig.compilerOptions
 
+resolvers += "vaadin-addons" at "http://maven.vaadin.com/vaadin-addons"
+
 lazy val root = (project in file("."))
   .settings(inThisBuild(Seq(
     libraryDependencies := Dependencies.codeDeps
